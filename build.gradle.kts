@@ -69,7 +69,8 @@ val test by tasks.getting(Test::class) {
                     "-Dcontrast.env=qa",
                     "-Dcontrast.standalone.appname=Kotlin-http4k",
                     "-Dcontrast.override.appversion=" + System.getenv("CI_COMMIT_SHORT_SHA"),
-                    "-Dcontrast.application.session_metadata=buildNumber=" + System.getenv("CI_PIPELINE_URL") + ",commitHash=" + System.getenv("CI_COMMIT_SHORT_SHA")
+                    "-Dcontrast.application.session_metadata=buildNumber=" + System.getenv("CI_PIPELINE_URL") + ",commitHash=" + System.getenv("CI_COMMIT_SHORT_SHA"),
+                    "-Dcontrast.agent.logger.stdout=true"
                     )
     useJUnitPlatform { }
 }
