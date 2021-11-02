@@ -38,7 +38,8 @@ contrast_verify:
     # Build the Job Outcome Policy body
     - JOP_REQUEST_DATA="{\"application_id\":\"$APP_ID\",\"security_check_filter\":{\"query_by\":\"APP_VERSION_TAG\", \"app_version_tags\":[\"$CI_COMMIT_SHORT_SHA\"],\"origin\":\"GitLab/Bash\"}"
     # Check for Job Outcome Policy results on this application
-    - declare -a MYARRAY=$($CURLCMD -d $JOP_REQUEST_DATA $BASEURL/securityChecks)
+    - declare -a MYARRAY=$($CURLCMD -d "$JOP_REQUEST_DATA" $BASEURL/securityChecks)
+    - echo ${MYARRAY[@]}
     - JOP_RESULT=$( echo ${MYARRAY[@]} | jq -r '.security_check.result' )
     - JOP_NAME=$( echo ${MYARRAY[@]} | jq -r '.security_check.job_outcome_policy.name' )
     - JOP_OUTCOME=$( echo ${MYARRAY[@]} | jq -r '.security_check.job_outcome_policy.outcome' )
