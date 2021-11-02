@@ -42,8 +42,8 @@ contrast_verify:
     - JOP_RESULT=$( echo ${MYARRAY[@]} | jq -r '.security_check.result' )
     - JOP_NAME=$( echo ${MYARRAY[@]} | jq -r '.security_check.job_outcome_policy.name' )
     - JOP_OUTCOME=$( echo ${MYARRAY[@]} | jq -r '.security_check.job_outcome_policy.outcome' )
-    - if [ $JOP_RESULT == 'false']; then echo "Exiting $JOP_OUTCOME - Policy '$JOP_NAME' matches this build" && exit 1; fi #Job Outcome Policy matches this build
-    - if [ $JOP_RESULT == 'true']; then echo "Build gate passes" && exit 0; fi #Job Outcome Policy does not match this build
+    - if [ $JOP_RESULT == 'false' ]; then echo "Exiting $JOP_OUTCOME - Policy '$JOP_NAME' matches this build" && exit 1; fi #Job Outcome Policy matches this build
+    - if [ $JOP_RESULT == 'true' ]; then echo "Build gate passes" && exit 0; fi #Job Outcome Policy does not match this build
     # No Job Outcome Policy exists for this build, so check manually for results
     # Search for vulnerabilities on this application found during this test run
     - declare -a MYARRAY=$($CURLCMD -G --data-urlencode "metadataFilters=$BUILDMETADATAFILTER" --data-urlencode "severities=$SEVERITIES" "$BASEURL/traces/$APP_ID/quick")
