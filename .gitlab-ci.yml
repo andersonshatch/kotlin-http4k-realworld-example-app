@@ -36,7 +36,7 @@ contrast_verify:
     - BUILDNUMID=$( echo ${MYARRAY[@]} | jq -r '.filters|map(select(any(.label; contains("Build Number")))|.id)[0]' )
     - COMMITHASHID=$( echo ${MYARRAY[@]} | jq -r '.filters|map(select(any(.label; contains("Commit Hash")))|.id)[0]' )
     # Build the Job Outcome Policy body
-    - JOP_REQUEST_DATA="{\"application_id\":\"$APP_ID\",\"security_check_filter\":{\"query_by\":\"APP_VERSION_TAG\", \"app_version_tags\":[\"$CI_COMMIT_SHORT_SHA\"],\"origin\":\"GitLab/Bash\"}"
+    - JOP_REQUEST_DATA="{\"application_id\":\"$APP_ID\",\"security_check_filter\":{\"query_by\":\"APP_VERSION_TAG\", \"app_version_tags\":[\"$CI_COMMIT_SHORT_SHA\"]},\"origin\":\"GitLab/Bash\"}"
     # Check for Job Outcome Policy results on this application
     - declare -a MYARRAY=$($CURLCMD -HContent-Type:application/json -d "$JOP_REQUEST_DATA" $BASEURL/securityChecks)
     - echo ${MYARRAY[@]}
