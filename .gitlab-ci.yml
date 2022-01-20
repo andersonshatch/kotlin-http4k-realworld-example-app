@@ -21,9 +21,11 @@ run_tests:
 contrast_verify:
   image: andersonshatch/contrastverifyaction:latest
   stage: verify
-  environment:
+  variables:
     INPUT_APIKEY: $CONTRAST__API_KEY
     INPUT_ORGID: $CONTRAST__ORG_ID
     INPUT_AUTHHEADER: $CONTRAST__AUTHORIZATION
     INPUT_APPNAME: $APP_NAME
     INPUT_BUILDNUMBER: $CI_COMMIT_SHORT_SHA
+  script:
+    - /usr/bin/env python3 /verify.py
