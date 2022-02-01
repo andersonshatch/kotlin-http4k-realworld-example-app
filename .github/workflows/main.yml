@@ -1,0 +1,45 @@
+name: Test and Verify
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v2.5.0
+        with:
+          java-version: 11
+          distribution: temurin
+
+      - name: Define job start time
+        run: |
+          import time
+          n = int(round(time.time() * 1000))
+          print(f"::set-output name=jobStartTime::{n}")
+        shell: python
+        id: set-job-start-time
+
+      - name: Build & run tests
+        run: |
+          CONTRAST_BASEURL=https://apptwo.contrastsecurity.com/Contrast/api/ng/${{ secrets.CONTRAST_ORG_ID }}
+          curl -v --max-time 30 $CONTRAST_BASEURL/agents/default/java -H API-Key:${{ secrets.CONTRAST_API_KEY }} -H Authorization:${{ secrets.CONTRAST_AUTH_HEADER }} -o contrast.jar
+          ./gradlew build
+          
+      - name: Contrast Verify
+        uses: andersonshatch/ContrastAssessVerifyAction@main
+        with:
+          apiKey: ${{ secrets.CONTRAST_API_KEY }}
+          orgId: ${{ secrets.CONTRAST_ORG_ID }}
+          apiUrl: https://apptwo.contrastsecurity.com
+          authHeader: ${{ secrets.CONTRAST_AUTH_HEADER }}
+          appName: Kotlin-http4k
+          #appId: app_uuid_here
+          jobStartTime: "${{ steps.set-job-start-time.outputs.jobStartTime }}"
