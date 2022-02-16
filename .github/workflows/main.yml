@@ -34,7 +34,7 @@ jobs:
           ./gradlew build
           
       - name: Contrast Verify
-        uses: andersonshatch/ContrastAssessVerifyAction@ghcr-image
+        uses: andersonshatch-org/ContrastAssessVerifyAction@0
         with:
           apiKey: ${{ secrets.CONTRAST_API_KEY }}
           orgId: ${{ secrets.CONTRAST_ORG_ID }}
