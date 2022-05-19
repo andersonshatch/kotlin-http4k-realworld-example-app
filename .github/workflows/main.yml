@@ -34,7 +34,7 @@ jobs:
           ./gradlew build
           
       - name: Contrast Verify
-        uses: Contrast-Security-OSS/integration-verify-github-action@main
+        uses: Contrast-Security-OSS/integration-verify-github-action@summary
         with:
           apiKey: ${{ secrets.CONTRAST_API_KEY }}
           orgId: ${{ secrets.CONTRAST_ORG_ID }}
