@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
 
@@ -19,22 +19,22 @@ jobs:
           java-version: 11
           distribution: temurin
 
-      - name: Define job start time
-        run: |
-          import time
-          n = int(round(time.time() * 1000))
-          print(f"::set-output name=jobStartTime::{n}")
-        shell: python
-        id: set-job-start-time
+      #- name: Define job start time
+      #  run: |
+      #    import time
+      #    n = int(round(time.time() * 1000))
+      #    print(f"::set-output name=jobStartTime::{n}")
+      #  shell: python
+      #  id: set-job-start-time
 
-      - name: Build & run tests
-        run: |
-          CONTRAST_BASEURL=https://apptwo.contrastsecurity.com/Contrast/api/ng/${{ secrets.CONTRAST_ORG_ID }}
-          curl -v --max-time 30 $CONTRAST_BASEURL/agents/default/java -H API-Key:${{ secrets.CONTRAST_API_KEY }} -H Authorization:${{ secrets.CONTRAST_AUTH_HEADER }} -o contrast.jar
-          ./gradlew build
+      #- name: Build & run tests
+      #  run: |
+      #    CONTRAST_BASEURL=https://apptwo.contrastsecurity.com/Contrast/api/ng/${{ secrets.CONTRAST_ORG_ID }}
+      #    curl -v --max-time 30 $CONTRAST_BASEURL/agents/default/java -H API-Key:${{ secrets.CONTRAST_API_KEY }} -H Authorization:${{ secrets.CONTRAST_AUTH_HEADER }} -o contrast.jar
+      #    ./gradlew build
           
       - name: Contrast Verify
-        uses: Contrast-Security-OSS/integration-verify-github-action@summary
+        uses: Contrast-Security-OSS/integration-verify-github-action@import-certs
         with:
           apiKey: ${{ secrets.CONTRAST_API_KEY }}
           orgId: ${{ secrets.CONTRAST_ORG_ID }}
