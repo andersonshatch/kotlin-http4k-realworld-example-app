@@ -38,8 +38,8 @@ jobs:
         with:
           apiKey: ${{ secrets.CONTRAST_API_KEY }}
           orgId: ${{ secrets.CONTRAST_ORG_ID }}
-          apiUrl: https://apptwo.contrastsecurity.com
+          apiUrl: https://eval.contrastsecurity.com
           authHeader: ${{ secrets.CONTRAST_AUTH_HEADER }}
-          appName: Kotlin-http4k
+          appName: cargo-cats-dataservice
           #appId: app_uuid_here
           jobStartTime: "${{ steps.set-job-start-time.outputs.jobStartTime }}"
